@@ -22,7 +22,7 @@ const HomeTiles = () => {
           <a
             key={index}
             href={link.href}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center p-6 rounded-xl shadow-lg hover:scale-105 transition transform duration-300"
+            className="bg-blue-600 text-white text-center p-6 rounded-xl shadow-lg hover:scale-105 transition transform duration-300"
           >
             {link.title}
           </a>
