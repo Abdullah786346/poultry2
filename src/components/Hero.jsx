@@ -60,9 +60,6 @@ const Hero = () => {
           <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold max-w-3xl leading-tight mb-4 sm:mb-6 drop-shadow-lg px-4">
             Welcome to Poultry Association Society
           </h1>
-          <p className="text-gray-200 text-lg sm:text-xl max-w-xl md:max-w-2xl mb-6 sm:mb-10 drop-shadow-md px-4">
-            Promoting excellence in poultry science and supporting poultry farmers worldwide
-          </p>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-xs sm:max-w-md justify-center">
