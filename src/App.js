@@ -27,6 +27,9 @@ function App() {
             element={
               <>
                 <Hero />
+                  <section id="resources">
+                  <Mission />
+                </section>
                 <section id="about">
                   <HomeTiles />
                 </section>
@@ -36,9 +39,7 @@ function App() {
                 <section id="news">
                   <News />
                 </section>
-                <section id="resources">
-                  <Mission />
-                </section>
+              
                 <section id="contact">
                   <Footer />
                 </section>

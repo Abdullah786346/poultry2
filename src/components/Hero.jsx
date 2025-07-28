@@ -46,7 +46,7 @@ const Hero = () => {
       {currentIndex === 0 && (
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 py-16">
           {/* Circle with Logo */}
-          <div className="rounded-full p-2 sm:p-4 mb-4 sm:mb-6 bg-white bg-opacity-80 shadow-lg">
+          <div className="rounded-full p-2 sm:p-4 mb-4 sm:mb-6  bg-opacity-80 shadow-lg">
             <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center">
               <img
                 src="/assets/logo.jpg"
