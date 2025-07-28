@@ -14,6 +14,8 @@ import Footer from './components/Footer';
 // Pages
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
+import Dashboard from './components/pages/Dashboard'; // ✅ Add this
+import PrivateRoute from './components/PrivateRoute'; // ✅ Add this
 
 function App() {
   return (
@@ -22,12 +24,13 @@ function App() {
         <Navbar />
 
         <Routes>
+          {/* Public Home Page */}
           <Route
             path="/"
             element={
               <>
                 <Hero />
-                  <section id="resources">
+                <section id="resources">
                   <Mission />
                 </section>
                 <section id="about">
@@ -39,15 +42,26 @@ function App() {
                 <section id="news">
                   <News />
                 </section>
-              
                 <section id="contact">
                   <Footer />
                 </section>
               </>
             }
           />
+
+          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+
+          {/* Protected Route */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
