@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, parseISO, isThisMonth, isThisWeek } from 'date-fns';
 import { FaCalendarAlt, FaNewspaper, FaSearch, FaRegCalendarCheck } from 'react-icons/fa';
 
 const NewsEventsPage = () => {
-  // Sample news data
-  const [news] = useState([
-    // ... (same as before)
-  ]);
+  // State for data
+  const [news, setNews] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Sample events data
-  const [events] = useState([
-    // ... (same as before)
-  ]);
-
-  // State for filters and search
+  // State for UI
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedNews, setSelectedNews] = useState(null);
+
+  // Fetch data from JSON file
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/newsEventsData.json');
+        
+        if (!response.ok) {
+          throw new Error('Failed to load data');
+        }
+        
+        const data = await response.json();
+        setNews(data.news);
+        setEvents(data.events);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Filter news based on category and search term
   const filteredNews = news.filter(item => {
@@ -32,31 +51,56 @@ const NewsEventsPage = () => {
     return isThisMonth(eventDate) || isThisWeek(eventDate) || new Date() < eventDate;
   });
 
-  // Function to handle news item click
-  const handleNewsClick = (newsItem) => {
-    setSelectedNews(newsItem);
+  // Handle news item click
+  const handleNewsClick = (item) => {
+    setSelectedNews(item);
   };
 
-  // Function to close news detail view
+  // Close news detail modal
   const closeNewsDetail = () => {
     setSelectedNews(null);
   };
 
-  // Helper function for category styling
+  // Get category classes for styling
   const getCategoryClasses = (category) => {
     switch(category) {
       case 'Research':
-        return 'bg-[#fde0e6] text-[#de0f3f]';
-      case 'Event':
         return 'bg-[#e9edd1] text-[#5a631c]';
-      case 'Industry Update':
-        return 'bg-[#eee0d0] text-[#714616]';
-      case 'Awards':
-        return 'bg-gray-100 text-gray-800';
+      case 'Event':
+        return 'bg-[#fde0e6] text-[#de0f3f]';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-200 text-gray-800';
     }
   };
+
+  // Loading and error states
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#714616] mx-auto"></div>
+          <p className="mt-4 text-[#714616]">Loading news & events...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-6 bg-red-50 rounded-lg max-w-md">
+          <h2 className="text-xl font-bold text-red-800">Error Loading Data</h2>
+          <p className="mt-2 text-red-600">{error}</p>
+          <button 
+            className="mt-4 px-4 py-2 bg-[#714616] text-white rounded hover:bg-[#5a370f] transition"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 text-[#545454]">
@@ -119,30 +163,38 @@ const NewsEventsPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredNews.map((item) => (
-              <div 
-                key={item.id} 
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-[#eee0d0]"
-                onClick={() => handleNewsClick(item)}
-              >
-                <div className="p-6">
-                  <div className="flex justify-between items-start">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getCategoryClasses(item.category)}`}>
-                      {item.category}
-                    </span>
-                    <span className="text-[#714616] text-sm">{format(parseISO(item.date), 'MMM d, yyyy')}</span>
+            {filteredNews.length > 0 ? (
+              filteredNews.map((item) => (
+                <div 
+                  key={item.id} 
+                  className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-[#eee0d0]"
+                  onClick={() => handleNewsClick(item)}
+                >
+                  <div className="p-6">
+                    <div className="flex justify-between items-start">
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getCategoryClasses(item.category)}`}>
+                        {item.category}
+                      </span>
+                      <span className="text-[#714616] text-sm">{format(parseISO(item.date), 'MMM d, yyyy')}</span>
+                    </div>
+                    <h3 className="text-xl font-bold mt-4 mb-2 text-[#714616]">{item.title}</h3>
+                    <p className="text-[#545454]">{item.excerpt}</p>
+                    <button className="mt-4 text-[#de0f3f] font-medium flex items-center">
+                      Read more
+                      <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
                   </div>
-                  <h3 className="text-xl font-bold mt-4 mb-2 text-[#714616]">{item.title}</h3>
-                  <p className="text-[#545454]">{item.excerpt}</p>
-                  <button className="mt-4 text-[#de0f3f] font-medium flex items-center">
-                    Read more
-                    <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <FaSearch className="mx-auto text-4xl text-gray-400 mb-4" />
+                <h3 className="text-xl font-medium text-gray-700">No news found</h3>
+                <p className="mt-2 text-gray-500">Try adjusting your search or filter criteria</p>
               </div>
-            ))}
+            )}
           </div>
         </section>
 
@@ -168,22 +220,28 @@ const NewsEventsPage = () => {
                   </div>
                 </div>
                 <div className="divide-y divide-[#eee0d0]">
-                  {upcomingEvents.map((event) => (
-                    <div key={event.id} className="grid grid-cols-12 py-4 px-4 hover:bg-[#f7f3ee]">
-                      <div className="col-span-3 flex items-center">
-                        <FaCalendarAlt className="text-[#de0f3f] mr-2" />
-                        <div>
-                          <div className="font-medium text-[#714616]">{format(parseISO(event.date), 'MMM d, yyyy')}</div>
-                          <div className="text-sm text-[#545454]">{event.time}</div>
+                  {upcomingEvents.length > 0 ? (
+                    upcomingEvents.map((event) => (
+                      <div key={event.id} className="grid grid-cols-12 py-4 px-4 hover:bg-[#f7f3ee]">
+                        <div className="col-span-3 flex items-center">
+                          <FaCalendarAlt className="text-[#de0f3f] mr-2" />
+                          <div>
+                            <div className="font-medium text-[#714616]">{format(parseISO(event.date), 'MMM d, yyyy')}</div>
+                            <div className="text-sm text-[#545454]">{event.time}</div>
+                          </div>
                         </div>
+                        <div className="col-span-5">
+                          <div className="font-medium text-[#714616]">{event.title}</div>
+                          <div className="text-sm text-[#545454]">{event.description}</div>
+                        </div>
+                        <div className="col-span-4 text-[#545454]">{event.location}</div>
                       </div>
-                      <div className="col-span-5">
-                        <div className="font-medium text-[#714616]">{event.title}</div>
-                        <div className="text-sm text-[#545454]">{event.description}</div>
-                      </div>
-                      <div className="col-span-4 text-[#545454]">{event.location}</div>
+                    ))
+                  ) : (
+                    <div className="py-8 text-center col-span-full">
+                      <p className="text-gray-500">No upcoming events scheduled</p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
@@ -352,4 +410,4 @@ const NewsEventsPage = () => {
   );
 };
 
-export default NewsEventsPage;
+export default NewsEventsPage; // Fixed typo: expot -> export

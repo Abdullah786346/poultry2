@@ -15,7 +15,7 @@ const Footer = () => {
                 className="w-12 h-12 object-cover mr-3 rounded"
               />
               <div>
-                <div className="text-xl font-bold text-[#714616]">Poultry Association </div>
+                <div className="text-xl font-bold text-[#714616]">Poultry Professionals Society PPS </div>
                 <div className="text-sm text-[#de0f3f]">Society for Excellence</div>
               </div>
             </div>
