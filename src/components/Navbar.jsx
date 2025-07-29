@@ -20,8 +20,9 @@ const Navbar = () => {
                 className="w-12 h-12 object-cover mr-3 rounded"
               />
               <div>
-                <div className="text-xl font-bold text-gray-800">Poultry Association</div>
-                <div className="text-sm text-amber-600">Society for Excellence</div>
+                <div className="text-xl font-bold text-darkgrey">Poultry Association</div>
+                 <div className="text-sm text-crimson">Society for Excellence</div>
+
               </div>
             </div>
 
@@ -43,22 +44,24 @@ const Navbar = () => {
 
           {/* Navigation Links and Login */}
           <div className={`${isMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row w-full md:w-auto mt-4 md:mt-0`}>
-            <div className="flex flex-col md:flex-row md:space-x-8 w-full">
-              <Link to="/" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">Home</Link>
-              <Link to="/#about" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">About</Link>
-              <Link to="/#membership" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">Membership</Link>
-              <Link to="/#news" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">Events</Link>
-              <Link to="/#resources" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">Resources</Link>
-              <Link to="/#contact" className="py-2 px-4 text-gray-800 hover:bg-amber-50 hover:text-amber-600 rounded-lg font-medium">Contact</Link>
-            </div>
+            <div className="flex flex-col md:flex-row md:space-x-8 w-full text-center">
+  <Link to="/" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">Home</Link>
+  <Link to="/#about" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">About</Link>
+  <Link to="/#membership" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">Membership</Link>
+  <Link to="/#news" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">Events</Link>
+  <Link to="/#resources" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">Resources</Link>
+  <Link to="/#contact" className="py-2 px-4 text-darkgrey hover:bg-brown hover:text-purewhite rounded-lg font-medium text-center">Contact</Link>
+     </div>
+
 
             <div className="mt-4 md:mt-0 md:ml-8 flex">
               <button
-                onClick={() => navigate('/login')}
-                className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-lg w-full md:w-auto"
-              >
-                Member Login
+              onClick={() => navigate('/login')}
+           className="bg-crimson hover:bg-darkgrey text-purewhite font-bold py-2 px-6 rounded-lg w-full md:w-auto">
+        
+            Member Login
               </button>
+
             </div>
           </div>
 

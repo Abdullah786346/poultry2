@@ -14,7 +14,7 @@ const links = [
 const HomeTiles = () => {
   return (
     <section className="py-10 px-4 bg-white">
-      <h2 className="text-3xl font-bold text-center mb-6">
+      <h2 className="text-3xl font-bold text-center mb-6 text-[#714616]">
         Explore PPS Programs and Resources
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -22,7 +22,7 @@ const HomeTiles = () => {
           <a
             key={index}
             href={link.href}
-            className="bg-blue-600 text-white text-center p-6 rounded-xl shadow-lg hover:scale-105 transition transform duration-300"
+            className="bg-[#714616] text-white text-center p-6 rounded-xl shadow-lg hover:scale-105 transition transform duration-300 hover:shadow-xl"
           >
             {link.title}
           </a>
