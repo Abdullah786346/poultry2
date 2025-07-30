@@ -1,8 +1,13 @@
+import { db } from '../firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { format, parseISO, isThisMonth, isThisWeek } from 'date-fns';
 import { FaCalendarAlt, FaNewspaper, FaSearch, FaRegCalendarCheck } from 'react-icons/fa';
 
 const NewsEventsPage = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
   // State for data
   const [news, setNews] = useState([]);
   const [events, setEvents] = useState([]);
@@ -375,7 +380,7 @@ const NewsEventsPage = () => {
         </div>
       )}
 
-      {/* Newsletter Signup */}
+      {/* Fixed Newsletter Signup Section */}
       <div className="bg-[#714616] text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="md:flex md:items-center md:justify-between">
@@ -386,19 +391,46 @@ const NewsEventsPage = () => {
               </p>
             </div>
             <div className="md:w-1/2">
-              <form className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="px-4 py-3 w-full rounded-l-lg focus:outline-none text-[#545454]"
-                />
+              <form
+                className="flex flex-col sm:flex-row gap-3"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!email) {
+                    setMessage('Please enter a valid email.');
+                    return;
+                  }
+
+                  try {
+                    await addDoc(collection(db, 'subscriptions'), {
+                      email: email,
+                      subscribedAt: Timestamp.now()
+                    });
+                    setMessage('Subscribed successfully!');
+                    setEmail('');
+                  } catch (error) {
+                    console.error('Error saving subscription:', error);
+                    setMessage('Something went wrong. Try again.');
+                  }
+                }}
+              >
+                <div className="flex-1">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg text-gray-800 focus:outline-none"
+                    required
+                  />
+                </div>
                 <button
                   type="submit"
-                  className="bg-[#de0f3f] text-white font-bold px-6 py-3 rounded-r-lg hover:bg-[#b20d33] transition-colors"
+                  className="bg-[#de0f3f] hover:bg-[#bf0d36] px-6 py-2 rounded-lg font-medium transition whitespace-nowrap"
                 >
                   Subscribe
                 </button>
               </form>
+              {message && <p className="mt-2 text-sm">{message}</p>}
               <p className="mt-2 text-sm opacity-75">
                 We respect your privacy. Unsubscribe at any time.
               </p>
@@ -410,4 +442,4 @@ const NewsEventsPage = () => {
   );
 };
 
-export default NewsEventsPage; // Fixed typo: expot -> export
+export default NewsEventsPage;

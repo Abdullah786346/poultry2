@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const Membership = () => {
+   const navigate = useNavigate(); 
   return (
     <div className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -48,7 +49,8 @@ const Membership = () => {
                   <span className="text-[#545454]">Quarterly industry reports and market analysis</span>
                 </li>
               </ul>
-              <button className="mt-8 bg-[#de0f3f] hover:bg-[#c10e38] text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-md">
+              <button  onClick={() => navigate('/login')}
+               className="mt-8 bg-[#de0f3f] hover:bg-[#c10e38] text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-md">
                 Apply Now
               </button>
             </div>

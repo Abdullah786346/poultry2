@@ -58,7 +58,7 @@ const Hero = () => {
 
           {/* Title & Description */}
           <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold max-w-3xl leading-tight mb-4 sm:mb-6 drop-shadow-lg px-4">
-            Welcome to the Poultry Association Society
+            Welcome to the Poultry Professionals Society
           </h1>
 
           {/* Mobile indicators */}
