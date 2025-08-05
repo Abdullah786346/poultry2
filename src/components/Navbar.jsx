@@ -21,7 +21,7 @@ const Navbar = () => {
               />
               <div>
                 <div className="text-xl font-bold text-darkgrey">Poultry Professionals Society PPS</div>
-                 <div className="text-sm text-crimson">Competency is the  Excellency</div>
+                <div className="text-sm text-crimson">Competency is the Excellency</div>
 
               </div>
             </div>

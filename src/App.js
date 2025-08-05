@@ -14,8 +14,8 @@ import Footer from './components/Footer';
 // Pages
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
-import Dashboard from './components/pages/Dashboard'; // ✅ Add this
-import PrivateRoute from './components/PrivateRoute'; // ✅ Add this
+import Dashboard from './components/pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (

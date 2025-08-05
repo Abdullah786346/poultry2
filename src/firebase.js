@@ -1,7 +1,6 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyARktvxjrtjgwjJtj1RTfmXZUpDziBlaX0",
@@ -16,3 +15,16 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Enable offline persistence for Firestore
+// Note: This should be called before any other Firestore operations
+// and only needs to be called once per app instance
+if (typeof window !== 'undefined') {
+  // Only run in browser environment
+  import('firebase/firestore').then(({ enableNetwork, disableNetwork }) => {
+    // Enable network by default
+    enableNetwork(db).catch((error) => {
+      console.warn('Failed to enable Firestore network:', error);
+    });
+  });
+}

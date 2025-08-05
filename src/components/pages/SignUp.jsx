@@ -46,7 +46,6 @@ const Signup = () => {
 
       // Send verification email
       await sendEmailVerification(user);
-      alert("Verification email sent. Please check your inbox.");
 
       // Save user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
@@ -58,12 +57,22 @@ const Signup = () => {
         createdAt: new Date().toISOString(),
       });
 
+      alert("Account created successfully! Verification email sent. Please check your inbox and verify your email before logging in.");
+
       // Redirect to login
       navigate('/login');
 
     } catch (error) {
       console.error("Signup error:", error.message);
-      alert("Signup failed: " + error.message);
+      if (error.code === 'auth/email-already-in-use') {
+        alert("An account with this email already exists.");
+      } else if (error.code === 'auth/weak-password') {
+        alert("Password should be at least 6 characters long.");
+      } else if (error.code === 'auth/invalid-email') {
+        alert("Please enter a valid email address.");
+      } else {
+        alert("Signup failed: " + error.message);
+      }
     }
   };
 

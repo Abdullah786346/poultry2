@@ -24,10 +24,20 @@ const Login = () => {
       }
 
       console.log('Login successful:', user);
-      navigate('/dashboard'); // ✅ Change this to your protected route
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
-      setError('Invalid email or password');
+      if (err.code === 'auth/user-not-found') {
+        setError('No account found with this email address.');
+      } else if (err.code === 'auth/wrong-password') {
+        setError('Incorrect password.');
+      } else if (err.code === 'auth/invalid-email') {
+        setError('Invalid email address.');
+      } else if (err.code === 'auth/user-disabled') {
+        setError('This account has been disabled.');
+      } else {
+        setError('Login failed. Please try again.');
+      }
     }
   };
 

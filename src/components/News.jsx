@@ -30,10 +30,11 @@ const NewsEventsPage = () => {
         }
         
         const data = await response.json();
-        setNews(data.news);
-        setEvents(data.events);
+        setNews(data.news || []);
+        setEvents(data.events || []);
         setLoading(false);
       } catch (err) {
+        console.error('Error fetching data:', err);
         setError(err.message);
         setLoading(false);
       }
