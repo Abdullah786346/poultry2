@@ -61,9 +61,12 @@ const Dashboard = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Profile Information</h2>
             <div className="space-y-2">
+              <p className="text-gray-600"><span className="font-medium">Name:</span> {user?.firstName} {user?.lastName}</p>
               <p className="text-gray-600"><span className="font-medium">Email:</span> {user?.email}</p>
-              <p className="text-gray-600"><span className="font-medium">Email Verified:</span> {user?.emailVerified ? 'Yes' : 'No'}</p>
-              <p className="text-gray-600"><span className="font-medium">Member Since:</span> {user?.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'N/A'}</p>
+              <p className="text-gray-600"><span className="font-medium">Role:</span> {user?.role}</p>
+              <p className="text-gray-600"><span className="font-medium">Organization:</span> {user?.organization || 'Not specified'}</p>
+              <p className="text-gray-600"><span className="font-medium">Email Verified:</span> {user?.isEmailVerified ? 'Yes' : 'No'}</p>
+              <p className="text-gray-600"><span className="font-medium">Member Since:</span> {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</p>
             </div>
           </div>
 
@@ -87,10 +90,18 @@ const Dashboard = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Membership Status</h2>
             <div className="text-center">
-              <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                Active Member
+              <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                user?.membershipStatus === 'active' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}>
+                {user?.membershipStatus === 'active' ? 'Active Member' : 'Pending Verification'}
               </div>
-              <p className="mt-2 text-gray-600">Your membership is active and in good standing.</p>
+              <p className="mt-2 text-gray-600">
+                {user?.membershipStatus === 'active' 
+                  ? 'Your membership is active and in good standing.' 
+                  : 'Please verify your email to activate your membership.'}
+              </p>
             </div>
           </div>
         </div>

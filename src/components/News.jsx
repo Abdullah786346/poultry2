@@ -402,15 +402,12 @@ const NewsEventsPage = () => {
                   }
 
                   try {
-                    await addDoc(collection(db, 'subscriptions'), {
-                      email: email,
-                      subscribedAt: Timestamp.now()
-                    });
-                    setMessage('Subscribed successfully!');
+                    const result = await subscriptionsAPI.subscribe(email);
+                    setMessage(result.data.message);
                     setEmail('');
                   } catch (error) {
                     console.error('Error saving subscription:', error);
-                    setMessage('Something went wrong. Try again.');
+                    setMessage(error.response?.data?.message || 'Something went wrong. Try again.');
                   }
                 }}
               >

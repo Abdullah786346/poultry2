@@ -98,6 +98,16 @@ const Signup = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {message && (
+            <div className={`p-3 rounded-lg text-sm ${
+              message.includes('successfully') 
+                ? 'bg-green-100 text-green-700' 
+                : 'bg-red-100 text-red-700'
+            }`}>
+              {message}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
@@ -217,14 +227,15 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-[#de0f3f] to-[#c10e38] hover:from-[#c10e38] hover:to-[#a00d32] disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:transform-none"
           >
-            Create Account
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
 
           <p className="text-center mt-4 text-gray-600 text-sm">
             Already have an account?{" "}
-            <Link to="/login" className="text-amber-600 font-semibold hover:underline">
+            <Link to="/login" className="text-[#de0f3f] font-semibold hover:underline">
               Sign in
             </Link>
           </p>

@@ -91,7 +91,7 @@ const Login = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <Link to="/forgot-password" className="text-sm text-amber-600 hover:text-amber-700">
+              <Link to="/forgot-password" className="text-sm text-[#de0f3f] hover:text-[#c10e38]">
                 Forgot password?
               </Link>
             </div>
@@ -119,9 +119,10 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            disabled={loading}
+            className="w-full bg-[#de0f3f] hover:bg-[#c10e38] disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:transform-none"
           >
-            Login to Account
+            {loading ? 'Logging in...' : 'Login to Account'}
           </button>
 
           <div className="mt-6 text-center">
@@ -129,7 +130,7 @@ const Login = () => {
               New user?{' '}
               <Link
                 to="/signup"
-                className="font-semibold text-amber-600 hover:text-amber-700 hover:underline"
+                className="font-semibold text-[#de0f3f] hover:text-[#c10e38] hover:underline"
               >
                 Sign up here
               </Link>
