@@ -1,70 +1,238 @@
-# Getting Started with Create React App
+# Poultry Professionals Society - MERN Stack Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application for the Poultry Professionals Society built with MongoDB, Express.js, React, and Node.js.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Authentication**: Registration, login, email verification, password reset
+- **User Dashboard**: Profile management, membership status
+- **News & Events**: Create, read, update, delete news articles and events
+- **Newsletter Subscription**: Email subscription management
+- **Responsive Design**: Mobile-friendly interface
+- **Security**: JWT authentication, password hashing, input validation
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- React 19.1.0
+- React Router DOM
+- Tailwind CSS
+- Axios for API calls
+- Date-fns for date formatting
+- React Icons
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- Node.js with Express.js
+- MongoDB with Mongoose
+- JWT for authentication
+- Bcrypt for password hashing
+- Nodemailer for email services
+- Express Validator for input validation
+- Helmet for security headers
+- CORS for cross-origin requests
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account or local MongoDB installation
+- Gmail account for email services (or other SMTP provider)
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd poultry-professionals-society
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**
+   ```bash
+   # Install frontend dependencies
+   npm install
+   
+   # Install backend dependencies
+   cd server
+   npm install
+   cd ..
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Environment Configuration**
 
-### `npm run eject`
+   **Frontend (.env)**
+   ```
+   REACT_APP_API_URL=http://localhost:5000/api
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   **Backend (server/.env)**
+   ```
+   MONGO_URI=mongodb+srv://muhammadabdullahfscem:ALrq4CYPnNbdK3o1@cluster0.vnsa0xi.mongodb.net/poultrydb?retryWrites=true&w=majority
+   JWT_SECRET=your_super_secret_jwt_key_here_make_it_very_long_and_secure
+   JWT_EXPIRE=7d
+   NODE_ENV=development
+   PORT=5000
+   UPLOAD_DIR=uploads
+   EMAIL_HOST=smtp.gmail.com
+   EMAIL_PORT=587
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_app_password
+   CLIENT_URL=http://localhost:3000
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Start the application**
+   ```bash
+   # Start both frontend and backend concurrently
+   npm start
+   
+   # Or start them separately
+   npm run client  # Frontend only
+   npm run server  # Backend only
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+5. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000/api
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Endpoints
 
-## Learn More
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/verify-email/:token` - Email verification
+- `POST /api/auth/forgot-password` - Request password reset
+- `PUT /api/auth/reset-password/:token` - Reset password
+- `GET /api/auth/me` - Get current user
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Users
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update user profile
+- `PUT /api/users/change-password` - Change password
+- `DELETE /api/users/profile` - Delete account
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### News
+- `GET /api/news` - Get all news articles
+- `GET /api/news/:id` - Get single news article
+- `POST /api/news` - Create news article (authenticated)
+- `PUT /api/news/:id` - Update news article (authenticated)
+- `DELETE /api/news/:id` - Delete news article (authenticated)
+- `POST /api/news/:id/like` - Like/unlike news article (authenticated)
+- `POST /api/news/:id/comments` - Add comment (authenticated)
 
-### Code Splitting
+### Events
+- `GET /api/events` - Get all events
+- `GET /api/events/:id` - Get single event
+- `POST /api/events` - Create event (authenticated)
+- `PUT /api/events/:id` - Update event (authenticated)
+- `DELETE /api/events/:id` - Delete event (authenticated)
+- `POST /api/events/:id/register` - Register for event (authenticated)
+- `DELETE /api/events/:id/register` - Cancel registration (authenticated)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Subscriptions
+- `POST /api/subscriptions` - Subscribe to newsletter
+- `POST /api/subscriptions/unsubscribe` - Unsubscribe from newsletter
+- `GET /api/subscriptions` - Get all subscriptions (admin only)
 
-### Analyzing the Bundle Size
+## Database Models
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### User
+- Personal information (name, email, organization, role)
+- Authentication data (password, verification tokens)
+- Membership status and preferences
+- Profile settings
 
-### Making a Progressive Web App
+### News
+- Article content (title, excerpt, content)
+- Metadata (author, category, tags, status)
+- Engagement (views, likes, comments)
+- Publishing information
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Event
+- Event details (title, description, date, location)
+- Registration management
+- Speaker information
+- Attendance tracking
 
-### Advanced Configuration
+### Subscription
+- Email subscription management
+- Preference settings
+- Subscription status tracking
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Security Features
 
-### Deployment
+- Password hashing with bcrypt
+- JWT token authentication
+- Email verification for new accounts
+- Password reset functionality
+- Input validation and sanitization
+- CORS protection
+- Security headers with Helmet
+- Rate limiting (can be added)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Development
 
-### `npm run build` fails to minify
+### Project Structure
+```
+├── public/                 # Static files
+├── src/                   # React frontend
+│   ├── components/        # React components
+│   ├── contexts/         # React contexts
+│   ├── pages/            # Page components
+│   ├── services/         # API services
+│   └── styles/           # CSS files
+├── server/               # Node.js backend
+│   ├── models/          # Mongoose models
+│   ├── routes/          # Express routes
+│   ├── middleware/      # Custom middleware
+│   ├── utils/           # Utility functions
+│   └── uploads/         # File uploads
+└── README.md
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Available Scripts
+
+**Frontend:**
+- `npm run client` - Start React development server
+- `npm run build` - Build for production
+- `npm test` - Run tests
+
+**Backend:**
+- `npm run server` - Start backend development server
+- `cd server && npm start` - Start backend production server
+
+**Full Stack:**
+- `npm start` - Start both frontend and backend
+- `npm run dev` - Start both in development mode
+
+## Deployment
+
+### Frontend Deployment
+1. Build the React app: `npm run build`
+2. Deploy the `build` folder to your hosting service (Netlify, Vercel, etc.)
+
+### Backend Deployment
+1. Set up environment variables on your hosting service
+2. Deploy the `server` folder to your hosting service (Heroku, Railway, etc.)
+3. Ensure MongoDB connection is configured for production
+
+### Environment Variables for Production
+- Update `CLIENT_URL` to your frontend domain
+- Update `MONGO_URI` for production database
+- Set `NODE_ENV=production`
+- Configure email service credentials
+- Generate secure `JWT_SECRET`
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
+
+## Support
+
+For support, email poultryprofessionalsociety@gmail.com or create an issue in the repository.
